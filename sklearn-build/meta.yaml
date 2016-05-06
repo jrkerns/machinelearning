@@ -1,0 +1,13 @@
+package:
+  name: scikit-learn
+  version: "0.18.dev0"
+
+source:
+  path: ../sklearn-dev
+
+requirements:
+  build:
+    - python
+    - numpy
+    - scipy
+    - cython
