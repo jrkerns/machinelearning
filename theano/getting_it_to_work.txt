@@ -1,0 +1,40 @@
+I'm not sure what eventually happened to get Theano to use my GPU, but here are my current settings and helpful tips:
+
+.theanorc.txt
+
+
+[global]
+device = gpu
+floatX = float32
+cxx = D:\TDM-GCC-64\bin\g++.exe
+
+[cuda]
+root = C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v7.5
+
+[nvcc]
+fastmath = True
+# flags = --use-local-env --cl-version=2013
+compile_bindir = D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin  <- VC12 == 2013
+
+
+For a while, this didn't work, but may have been due a cache error. Clearing the cache should be able to be done via:
+theano-cache clear
+but I never got it to work. You can manually clear it at:
+D:\Users\James\AppData\Local\Theano
+
+After that things were intermittent, but seems to be somewhat stable.
+
+One other thing. I tried debugging the failing nvcc complile by running python in a shell and importing theano.sandbox.cuda.nvcc_compiler
+and it started working. Don't know if this was a trigger or what.
+Relevant system PATH variables and their order:
+D:\TDM-GCC-64\bin;
+D:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\Tools\;
+D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\amd64;  <- 64-bit
+D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin;        <- 32-bit
+D:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\;
+
+Some helpful links:
+- Tutorial on getting the GPU to work on Windows
+https://vanishingcodes.wordpress.com/2015/10/25/installing-cuda-7-5-and-pycuda-on-windows-for-testing-theano-with-gpu/
+- Docs on CUDA, esp. the VC versions it supports
+http://docs.nvidia.com/cuda/cuda-installation-guide-microsoft-windows/index.html#axzz3pXt0nKkV

@@ -8,6 +8,10 @@ source:
 requirements:
   build:
     - python
+    - setuptools
+    - pip
+    - wheel
+    - mkl
     - numpy
     - scipy
     - cython
